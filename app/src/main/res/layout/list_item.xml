@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginLeft="8dp"
+    android:layout_marginTop="4dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginBottom="4dp"
+    android:id="@+id/cardView"
+    card_view:cardCornerRadius="4dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="8dp">
+        <ImageView
+            android:id="@+id/posterImageView"
+            android:layout_width="150dp"
+            android:layout_height="220dp"
+            android:layout_marginBottom="4dp"
+            android:scaleType="centerCrop"
+            tools:src="@color/colorAccent" />
+        <TextView
+            android:id="@+id/judulTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:layout_marginBottom="8dp"
+            android:layout_toEndOf="@id/posterImageView"
+            android:layout_toRightOf="@id/posterImageView"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="@string/judul_film" />
+
+        <TextView
+            android:id="@+id/deskripsiTextView"
+            android:layout_width="195dp"
+            android:layout_height="84dp"
+
+            android:layout_below="@id/judulTextView"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:layout_toEndOf="@id/posterImageView"
+            android:layout_toRightOf="@id/posterImageView"
+            android:ellipsize="end"
+            android:maxLines="5"
+            tools:text="@string/description" />
+
+        <TextView
+            android:id="@+id/tanggalRilisTextView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:layout_below="@id/deskripsiTextView"
+            android:layout_marginLeft="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:layout_toEndOf="@id/posterImageView"
+            android:layout_toRightOf="@id/posterImageView"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:text="@string/release_date"
+            android:textStyle="bold"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

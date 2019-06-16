@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dicoding_Submisi2</string>
+    <string name="Tanggal_Rilis">Release Date</string>
+    <string name="aditya_negara">Aditya Negara</string>
+    <string name="change_language_settings">Change Language Setting</string>
+    <string name="description">Film Description</string>
+    <string name="dummy_photo">dummy foto</string>
+    <string name="hello_blank_fragment">Hello Blank Fragment</string>
+    <string name="judul_film">Film Title</string>
+    <string name="movie_fragment">MOVIE FRAGMENT</string>
+    <string name="release_date">Release Date</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</string>
+    <string name="reviewer">"Reviewer: "</string>
+    <string name="reviewer_aditya_negara">Reviewer: Aditya Negara</string>
+    <string name="tab_text_1">Movie</string>
+    <string name="tab_text_2">Serial TV</string>
+    <string name="tanggal_rilis">Release Date</string>
+    <string name="tv_show_fragmen_t">TV_ SHOW FRAGMENT</string>
+</resources>
