@@ -1,7 +1,6 @@
 package com.example.dicoding_submisi2.ui.main;
 
 
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,28 +11,39 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
-import com.example.dicoding_submisi2.Item;
-import com.example.dicoding_submisi2.MainActivity;
-import com.example.dicoding_submisi2.MyAdapter;
+import com.example.dicoding_submisi2.Adapter;
+import com.example.dicoding_submisi2.ApiInterface;
+import com.example.dicoding_submisi2.Movie;
+import com.example.dicoding_submisi2.MovieResults;
 import com.example.dicoding_submisi2.R;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class MovieFragment extends Fragment {
 
-    private  String[] dataJudul;
-    private String[] dataDescription;
-    private  String[] dataTanggalRilis;
-    private TypedArray dataPoster;
-    public MyAdapter movieAdapter;
-
-
-    private RecyclerView rvMovie;
-    private ArrayList<Item> movieList ;
+    public static String BASE_URL = "https://api.themoviedb.org";
+    public static int PAGE = 1;
+    public static  String API_KEY = "b9239506432ea4c54f8b16f4a3679008";
+    public static   String LANGUAGE = "en-us";
+    public static  String CATEGORY = "popular";
+    public static String JENIS = "movie";
+    public static  String POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
+    private ProgressBar progressBar;
+    public Adapter movieAdapter;
+    private RecyclerView movieRecyclerView;
+    ArrayList<Movie> movieList = new ArrayList<>();
 
 
     public MovieFragment() {
@@ -59,41 +69,79 @@ public class MovieFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rvMovie = getView().findViewById(R.id.rv_movie);
-        rvMovie.setHasFixedSize(true);
-        rvMovie.setLayoutManager(new LinearLayoutManager(getActivity()));
-        prepare();
-        addItem();
-        rvMovie.setAdapter(movieAdapter);
+//        rvMovie = getView().findViewById(R.id.rv_movie);
+//        rvMovie.setHasFixedSize(true);
+//        rvMovie.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        rvMovie.setAdapter(movieAdapter);
+        movieRecyclerView  = getView().findViewById(R.id.rv_movie);
+        movieRecyclerView.setHasFixedSize(true);
+        movieRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        progressBar = getView().findViewById(R.id.progressBar);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ApiInterface apiInterface = retrofit.create(ApiInterface.class);
+        Call<MovieResults> call = apiInterface.listOfMovie(JENIS,CATEGORY, API_KEY, LANGUAGE, PAGE);
+        call.enqueue(new Callback<MovieResults>() {
+            @Override
+            public void onResponse(Call<MovieResults> call, Response<MovieResults> response) {
+                MovieResults results = response.body();
+                List<MovieResults.ResultsBean> listOfMovies = results.getResults();
+
+                for (MovieResults.ResultsBean resultsBean : listOfMovies){
+                    double id = resultsBean.getId();
+                    String title = resultsBean.getTitle();
+                    String overview = resultsBean.getOverview();
+                    String releaseDate = resultsBean.getRelease_date();
+                    String posterLink = POSTER_BASE_URL+resultsBean.getPoster_path();
+                    Movie movie = new Movie(id,title, overview, posterLink, releaseDate, true);
+                    Log.i("data movie id", String.valueOf(movie.getId()));
+                    Log.i("data movie judul", movie.getTitle());
+                    Log.i("data movie overview", movie.getOverview());
+                    Log.i("data movie releaseDate", movie.getReleaseDate());
+                    Log.i("data movie posterLink", movie.getPosterLink());
+                    movieList.add(movie);
+
+                }
+
+                movieAdapter = new Adapter(movieList, getActivity());
+                movieRecyclerView.setAdapter(movieAdapter);
+
+                progressBar.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFailure(Call<MovieResults> call, Throwable t) {
+                t.printStackTrace();
+            }
+        });
 
     }
 
-    private void  prepare(){
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
 
-        dataJudul = getResources().getStringArray(R.array.data_judul);
-        dataDescription = getResources().getStringArray(R.array.data_deskripsi);
-        dataTanggalRilis = getResources().getStringArray(R.array.data_tanggalRilis);
-        dataPoster = getResources().obtainTypedArray(R.array.data_photo);
-
+        outState.putParcelableArrayList("movieList", movieList);
+        super.onSaveInstanceState(outState);
     }
 
-    public  void addItem(){
-        movieList = new ArrayList<>();
-        for (int i = 0;i <dataJudul.length; i++){
-            Item movie = new Item();
-            movie.setJudul(dataJudul[i]);
-            Log.i("judul", dataJudul[i]);
-            movie.setDeskripsi(dataDescription[i]);
-            movie.setTanggalRilis(dataTanggalRilis[i]);
-            movie.setPoster(dataPoster.getResourceId(i, -1));
-            movieList.add(movie);
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            movieList = savedInstanceState.getParcelableArrayList("movieList");
+
+            movieAdapter = new Adapter(movieList, getActivity());
+            movieRecyclerView.setAdapter(movieAdapter);
+
+            progressBar.setVisibility(View.GONE);
         }
-        for(int i = 0 ; i<movieList.size();i++){
-            Log.i("movieList judul", movieList.get(i).getJudul());
-            Log.i("movieList deskripsi", movieList.get(i).getDeskripsi());
-            Log.i("movieList tanggal", movieList.get(i).getTanggalRilis());
-        }
-       movieAdapter = new MyAdapter(movieList, getActivity());
-        Log.i("count", String.valueOf(movieAdapter.getItemCount()));
+
     }
+
+
 }

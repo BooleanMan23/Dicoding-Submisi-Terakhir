@@ -1,33 +1,34 @@
 package com.example.dicoding_submisi2;
 
-        import android.content.Context;
-        import android.content.Intent;
-        import android.support.annotation.NonNull;
-        import android.support.v7.widget.CardView;
-        import android.support.v7.widget.RecyclerView;
-        import android.util.Log;
-        import android.view.LayoutInflater;
-        import android.view.View;
-        import android.view.ViewGroup;
-        import android.widget.ImageView;
-        import android.widget.TextView;
+import android.content.Context;
+import android.content.Intent;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-        import java.util.ArrayList;
-        import com.bumptech.glide.Glide;
-        import com.bumptech.glide.request.RequestOptions;
+import java.util.ArrayList;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.squareup.picasso.Picasso;
 
-public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
-    ArrayList<Item> Items;
+    ArrayList<Movie> movies;
     private Context context;
 
-    public MyAdapter(ArrayList<Item> Items, Context context) {
-        this.Items = Items;
+    public Adapter(ArrayList<Movie> movies, Context context) {
+        this.movies = movies;
         this.context = context;
     }
 
-    public ArrayList<Item> getListItem(){
-        return Items;
+    public ArrayList<Movie> getListItem(){
+        return movies;
     }
 
     @NonNull
@@ -42,28 +43,31 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         Log.i("onBindViewHolder", "true");
-        final Item Item = getListItem().get(i);
+        final Movie movie = getListItem().get(i);
 
+        Picasso.get().load(movie.getPosterLink()).into(viewHolder.posterImageView);
 
-        viewHolder.posterImageView.setImageResource(Item.getPoster());
-        viewHolder.judulTextView.setText(Item.getJudul());
-        viewHolder.deskripsiTextView.setText(Item.getDeskripsi());
-        viewHolder.tanggalRilisTextView.setText(Item.getTanggalRilis());
+        viewHolder.judulTextView.setText(movie.getTitle());
+        viewHolder.deskripsiTextView.setText(movie.getOverview());
+        viewHolder.tanggalRilisTextView.setText(movie.getReleaseDate());
 
         viewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, DetailItemActivity.class);
-                i.putExtra("Item",Item );
+                i.putExtra("isMovie", movie.getIsMovie());
+                i.putExtra("id", movie.getId() );
                 context.startActivity(i);
             }
         });
+
+
 
     }
 
     @Override
     public int getItemCount() {
-        return Items.size();
+        return movies.size();
     }
 
     public class ViewHolder extends  RecyclerView.ViewHolder{

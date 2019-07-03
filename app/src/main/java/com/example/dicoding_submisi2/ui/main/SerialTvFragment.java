@@ -1,36 +1,45 @@
 package com.example.dicoding_submisi2.ui.main;
 
 import android.support.v4.app.Fragment;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
-import com.example.dicoding_submisi2.Item;
-import com.example.dicoding_submisi2.MainActivity;
-import com.example.dicoding_submisi2.MyAdapter;
+import com.example.dicoding_submisi2.Adapter;
+import com.example.dicoding_submisi2.Movie;
+import com.example.dicoding_submisi2.SerialTvInterface;
+import com.example.dicoding_submisi2.SerialTvResults;
 import com.example.dicoding_submisi2.R;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class SerialTvFragment extends Fragment {
-    private  String[] dataJudul;
-    private String[] dataDescription;
-    private  String[] dataTanggalRilis;
-    private TypedArray dataPoster;
-    public MyAdapter serialTvAdapter;
+    public static String BASE_URL = "https://api.themoviedb.org";
+    public static int PAGE = 1;
+    public static  String API_KEY = "b9239506432ea4c54f8b16f4a3679008";
+    public static   String LANGUAGE = "en-us";
+    public static  String CATEGORY = "popular";
+    public static  String POSTER_BASE_URL = "https://image.tmdb.org/t/p/w185";
+    private ProgressBar progressBar;
+    public Adapter movieAdapter;
+    private RecyclerView movieRecyclerView;
+    ArrayList<Movie> movieList = new ArrayList<>();
 
-
-    private RecyclerView rvMovie;
-    private ArrayList<Item> serialTvList ;
 
 
     public SerialTvFragment() {
@@ -56,40 +65,80 @@ public class SerialTvFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rvMovie = getView().findViewById(R.id.rv_movie);
-        rvMovie.setHasFixedSize(true);
-        rvMovie.setLayoutManager(new LinearLayoutManager(getActivity()));
-        prepare();
-        addItem();
-        rvMovie.setAdapter(serialTvAdapter);
+        movieRecyclerView  = getView().findViewById(R.id.rv_movie);
+        movieRecyclerView.setHasFixedSize(true);
+        movieRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        progressBar = getView().findViewById(R.id.progressBar);
+        Log.i("serial tv fragment", "SERIAL TV FRAGMENT");
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        SerialTvInterface apiInterface = retrofit.create(SerialTvInterface.class);
+        Call<SerialTvResults> call = apiInterface.listOfSerialTv(CATEGORY, API_KEY, LANGUAGE, PAGE);
+        call.enqueue(new Callback<SerialTvResults>() {
+            @Override
+            public void onResponse(Call<SerialTvResults> call, Response<SerialTvResults> response) {
+                SerialTvResults results = response.body();
+                List<SerialTvResults.ResultsBean> listOfSerialTv = results.getResults();
+
+                for (SerialTvResults.ResultsBean resultsBean : listOfSerialTv){
+                    double id = resultsBean.getId();
+                    String title = resultsBean.getName();
+                    String overview = resultsBean.getOverview();
+                    String releaseDate = resultsBean.getFirst_air_date();
+                    String posterLink = POSTER_BASE_URL+resultsBean.getPoster_path();
+                    Movie movie = new Movie(id, title, overview, posterLink, releaseDate, false);
+                    Log.i("data TV ID", String.valueOf(movie.getId()));
+                    Log.i("data TV judul", movie.getTitle());
+                    Log.i("data TV overview", movie.getOverview());
+                    Log.i("data TV releaseDate", movie.getReleaseDate());
+                    Log.i("data TV posterLink", movie.getPosterLink());
+                    movieList.add(movie);
+
+                }
+
+                movieAdapter = new Adapter(movieList, getActivity());
+                movieRecyclerView.setAdapter(movieAdapter);
+
+                progressBar.setVisibility(View.GONE);
+
+            }
+
+            @Override
+            public void onFailure(Call<SerialTvResults> call, Throwable t) {
+                Log.i("failur", "failure");
+                t.printStackTrace();
+            }
+        });
+
     }
 
-    private void  prepare(){
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
 
-        dataJudul = getResources().getStringArray(R.array.data_judul_film);
-        dataDescription = getResources().getStringArray(R.array.data_deskripsi_film);
-        dataTanggalRilis = getResources().getStringArray(R.array.data_tanggalRilis_film);
-        dataPoster = getResources().obtainTypedArray(R.array.data_photo_film);
-
+        outState.putParcelableArrayList("movieList", movieList);
+        super.onSaveInstanceState(outState);
     }
 
-    public  void addItem(){
-        serialTvList = new ArrayList<>();
-        for (int i = 0;i <dataJudul.length; i++){
-            Item movie = new Item();
-            movie.setJudul(dataJudul[i]);
-            Log.i("judul", dataJudul[i]);
-            movie.setDeskripsi(dataDescription[i]);
-            movie.setTanggalRilis(dataTanggalRilis[i]);
-            movie.setPoster(dataPoster.getResourceId(i, -1));
-            serialTvList.add(movie);
+
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            movieList = savedInstanceState.getParcelableArrayList("movieList");
+
+            movieAdapter = new Adapter(movieList, getActivity());
+            movieRecyclerView.setAdapter(movieAdapter);
+
+            progressBar.setVisibility(View.GONE);
         }
-        for(int i = 0 ; i<serialTvList.size();i++){
-            Log.i("serialTvList judul", serialTvList.get(i).getJudul());
-            Log.i("serialTvList deskripsi", serialTvList.get(i).getDeskripsi());
-            Log.i("serialTvList tanggal", serialTvList.get(i).getTanggalRilis());
-        }
-        serialTvAdapter = new MyAdapter(serialTvList, getActivity());
-        Log.i("count", String.valueOf(serialTvAdapter.getItemCount()));
+
     }
+
+
+
+
 }
+
