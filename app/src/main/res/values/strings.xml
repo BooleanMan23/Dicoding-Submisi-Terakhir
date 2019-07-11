@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">Dicoding_Submisi3</string>
+    <string name="app_name">Dicoding_Submisi4</string>
     <string name="tab_text_1">FILM</string>
     <string name="tab_text_2">ACARA TV</string>
+    <string name="tab_text_3">FILM FAVORIT</string>
+    <string name="tab_text_4">ACARA TV FAVORIT</string>
 
     <string-array name="data_judul">
         <item>A Star is Born</item>
@@ -207,6 +209,8 @@
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</string>
     <string name="reviewer_aditya_negara">Reviewer : Aditya Negara</string>
     <string name="change_language_settings">Ubah Pengaturan Bahasa</string>
+    <string name="masukan_favorit">Masukan Favorit</string>
+    <string name="hapus_favorit">hapus favorit</string>
 
 
 </resources>

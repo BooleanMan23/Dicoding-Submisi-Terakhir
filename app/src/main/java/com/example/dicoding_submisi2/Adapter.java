@@ -56,7 +56,9 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             public void onClick(View view) {
                 Intent i = new Intent(context, DetailItemActivity.class);
                 i.putExtra("isMovie", movie.getIsMovie());
+                Log.i("intent isMovie", String.valueOf(movie.getIsMovie()));
                 i.putExtra("id", movie.getId() );
+                Log.i("intent id", String.valueOf(movie.getId()));
                 context.startActivity(i);
             }
         });

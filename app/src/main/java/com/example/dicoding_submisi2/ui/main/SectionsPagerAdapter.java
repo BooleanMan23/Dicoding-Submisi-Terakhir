@@ -16,7 +16,7 @@ import com.example.dicoding_submisi2.R;
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes
-    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2};
+    private static final int[] TAB_TITLES = new int[]{R.string.tab_text_1, R.string.tab_text_2, R.string.tab_text_3, R.string.tab_text_4};
     private final Context mContext;
 
     public SectionsPagerAdapter(Context context, FragmentManager fm) {
@@ -27,15 +27,17 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         Fragment fragment = null;
-        switch (position){
-            case 0:
-                fragment = new MovieFragment();
-                break;
-            case 1:
-                fragment = new SerialTvFragment();
-                break;
-
-
+        if (position == 0){
+            fragment = new MovieFragment();
+        }
+        if (position == 1){
+            fragment = new SerialTvFragment();
+        }
+        else if (position == 2){
+            fragment = new FavoritMovieFragment();
+        }
+        else if (position == 3){
+            fragment = new FavoritSerialTvFragment();
         }
         return fragment;
     }
@@ -49,6 +51,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @Override
     public int getCount() {
         // Show 2 total pages.
-        return 2;
+        return 4;
     }
 }

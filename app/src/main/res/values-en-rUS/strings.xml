@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Dicoding_Submisi3</string>
+    <string name="app_name">Dicoding_Submisi4</string>
     <string name="Tanggal_Rilis">Release Date</string>
     <string name="aditya_negara">Aditya Negara</string>
     <string name="change_language_settings">Change Language Setting</string>
@@ -17,4 +17,7 @@
     <string name="tab_text_2">Serial TV</string>
     <string name="tanggal_rilis">Release Date</string>
     <string name="tv_show_fragmen_t">TV_ SHOW FRAGMENT</string>
+
+    <string name="tab_text_3">FAVORITE MOVIE</string>
+    <string name="tab_text_4">FAVORITE SERIAL TV</string>
 </resources>

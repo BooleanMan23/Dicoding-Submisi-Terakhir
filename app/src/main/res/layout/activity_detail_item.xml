@@ -136,6 +136,34 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/detailPosterImageView" />
 
+        <Button
+            android:id="@+id/masukanFavoritButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:onClick="masukanFavorit"
+            android:text="@string/masukan_favorit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="@+id/detailDeskripsiTextView"
+            app:layout_constraintTop_toBottomOf="@+id/detailDeskripsiTextView" />
+
+        <Button
+            android:id="@+id/removeFavoritButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:onClick="hapusFavorit"
+            android:text="@string/hapus_favorit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.504"
+            app:layout_constraintStart_toStartOf="@+id/detailDeskripsiTextView"
+            app:layout_constraintTop_toBottomOf="@+id/detailDeskripsiTextView" />
+
 
     </android.support.constraint.ConstraintLayout>
 
