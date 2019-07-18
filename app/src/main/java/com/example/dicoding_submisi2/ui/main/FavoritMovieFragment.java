@@ -1,6 +1,7 @@
 package com.example.dicoding_submisi2.ui.main;
 
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,11 +34,17 @@ public class FavoritMovieFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.i("wolo", "mv");
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_favorit_movie, container, false);
 
     }
@@ -45,6 +52,7 @@ public class FavoritMovieFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         movieRecyclerView  = getView().findViewById(R.id.rv_movie);
         movieRecyclerView.setHasFixedSize(true);
         movieRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -52,7 +60,7 @@ public class FavoritMovieFragment extends Fragment {
         movieList = new ArrayList<>();
         movieList.clear();
         prepare();
-        movieAdapter = new Adapter(movieList, getActivity());
+        movieAdapter = new Adapter("moviefavorit",movieList, getActivity());
         movieRecyclerView.setAdapter(movieAdapter);
         progressBar.setVisibility(View.GONE);
 
@@ -127,11 +135,27 @@ public class FavoritMovieFragment extends Fragment {
         if (savedInstanceState != null) {
             movieList = savedInstanceState.getParcelableArrayList("movieList");
 
-            movieAdapter = new Adapter(movieList, getActivity());
+            movieAdapter = new Adapter("moviefavorit",movieList, getActivity());
             movieRecyclerView.setAdapter(movieAdapter);
 
             progressBar.setVisibility(View.GONE);
         }
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        Log.i("onAttach", "mvf");
+        super.onAttach(context);
+    }
+
+    @Override
+    public void setMenuVisibility(final boolean visible) {
+        if (visible) {
+            MainActivity.FRAGMENT_APA = "mv";
+            Log.i("visibility", "mvf");
+        }
+
+        super.setMenuVisibility(visible);
     }
 }

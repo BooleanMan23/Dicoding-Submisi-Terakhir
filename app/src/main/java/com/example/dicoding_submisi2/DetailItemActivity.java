@@ -26,10 +26,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DetailItemActivity extends AppCompatActivity {
-    public static String BASE_URL = "https://api.themoviedb.org";
-    public static   String LANGUAGE = "en-us";
-    public static  String KEY = "b9239506432ea4c54f8b16f4a3679008";
-    public static  String POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500";
     ImageView posterImageView;
     TextView judulTextView;
     TextView deskripsiTextView;
@@ -37,12 +33,14 @@ public class DetailItemActivity extends AppCompatActivity {
     ProgressBar detailProgressbar;
     Button masukanFavoritButton;
     Button hapusFavoritButton;
+
     double sqlId;
     String judul;
     String overview;
     String releaseDate;
     String posterLink;
     Boolean apakahMovie;
+    Movie movie;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,113 +53,30 @@ public class DetailItemActivity extends AppCompatActivity {
         tanggalRilisTextView = (TextView) findViewById(R.id.detailTanggalRilisFilmTextView);
         detailProgressbar = findViewById(R.id.detailProgressBar);
 
-masukanFavoritButton.setVisibility(View.GONE);
-     hapusFavoritButton.setVisibility(View.GONE);
-
+        masukanFavoritButton.setVisibility(View.GONE);
+        hapusFavoritButton.setVisibility(View.GONE);
 
 
         Intent intent = getIntent();
-        final double intentId = intent.getDoubleExtra("id", 0);
-        Log.i("id", String.valueOf(intentId));
-        final boolean[] isMovie = {intent.getBooleanExtra("isMovie", false)};
-
-        if (isMovie[0] == true){
-            Log.i("isMovie", "true");
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            DetailMovieInterface apiInterface = retrofit.create(DetailMovieInterface.class);
-            Call<DetailMovieResult> call = apiInterface.listOfMovie(intentId, KEY, LANGUAGE);
-            call.enqueue(new Callback<DetailMovieResult>() {
-                @Override
-                public void onResponse(Call<DetailMovieResult> call, Response<DetailMovieResult> response) {
-                    Log.i("onResponse", "onresponse");
-                 DetailMovieResult result = response.body();
-                 detailProgressbar.setVisibility(View.GONE);
-                 double id = intentId;
-                 sqlId = id;
-                  judul = result.getTitle();
-                  overview = result.getOverview();
-                  releaseDate = result.getRelease_date();
-                  posterLink = POSTER_BASE_URL+result.getPoster_path();
-                apakahMovie = true;
-                    sudahFavorit(id);
-                 Movie movie = new Movie(id, judul, overview, posterLink, releaseDate, apakahMovie);
-
-                 Log.i("detail movie judul", movie.getTitle());
-                 Log.i("detail movie overview", movie.getOverview());
-                 Log.i("detail movie rilis", movie.getReleaseDate());
-                 Log.i("detail movie poster", movie.getPosterLink());
-                    Picasso.get().load(movie.getPosterLink()).into(posterImageView);
-                    judulTextView.setText(movie.getTitle());
-                    deskripsiTextView.setText(movie.getOverview());
-                    tanggalRilisTextView.setText(movie.getReleaseDate());
-
-
-
-
-
-                }
-
-                @Override
-                public void onFailure(Call<DetailMovieResult> call, Throwable t) {
-                    Log.i("failur", t.toString());
-
-                }
-            });
-        }
-        else {
-            Log.i("isMovie", "false");
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-
-            DetailSerialTvInterface apiInterface = retrofit.create(DetailSerialTvInterface.class);
-            Call<DetailSerialTvResult> call = apiInterface.listOfSerialTv(intentId, KEY, LANGUAGE);
-            call.enqueue(new Callback<DetailSerialTvResult>() {
-                @Override
-                public void onResponse(Call<DetailSerialTvResult> call, Response<DetailSerialTvResult> response) {
-                    Log.i("onResponse", "onresponse");
-                    DetailSerialTvResult result = response.body();
-                    detailProgressbar.setVisibility(View.GONE);
-
-                     judul = result.getName();
-                     overview = result.getOverview();
-                     releaseDate = result.getFirst_air_date();
-                     posterLink = POSTER_BASE_URL+result.getPoster_path();
-                     sqlId = result.getId();
-                     apakahMovie = false;
-
-
-                     sudahFavorit(sqlId);
-                    Movie movie = new Movie(sqlId, judul, overview, posterLink, releaseDate,apakahMovie);
-                    Log.i("detail movie judul", movie.getTitle());
-                    Log.i("detail movie overview", movie.getOverview());
-                    Log.i("detail movie rilis", movie.getReleaseDate());
-                    Log.i("detail movie poster", movie.getPosterLink());
-                    Picasso.get().load(movie.getPosterLink()).into(posterImageView);
-                    judulTextView.setText(movie.getTitle());
-                    deskripsiTextView.setText(movie.getOverview());
-                    tanggalRilisTextView.setText(movie.getReleaseDate());
-
-
-
-
-
-                }
-
-                @Override
-                public void onFailure(Call<DetailSerialTvResult> call, Throwable t) {
-                    Log.i("failur", t.toString());
-
-                }
-            });
-        }
-
-
+        movie = intent.getExtras().getParcelable("movie");
+        judul = movie.getTitle();
+        overview = movie.getOverview();
+        sqlId = movie.getId();
+        posterLink = movie.getPosterLink();
+        releaseDate = movie.getReleaseDate();
+        apakahMovie = movie.getIsMovie();
+        Log.i("detailmovie", judul);
+        Log.i("detailmovie",overview);
+        Log.i("detailmovie", String.valueOf(sqlId));
+        Log.i("detailmovie", posterLink);
+        Log.i("detailmovie", releaseDate);
+        Log.i("detailMovie", String.valueOf(apakahMovie));
+        sudahFavorit(sqlId);
+        Picasso.get().load(posterLink).into(posterImageView);
+        judulTextView.setText(judul);
+        deskripsiTextView.setText(overview);
+        tanggalRilisTextView.setText(releaseDate);
+    detailProgressbar.setVisibility(View.GONE);
 
     }
 

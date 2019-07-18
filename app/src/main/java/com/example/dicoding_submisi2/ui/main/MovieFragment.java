@@ -1,6 +1,7 @@
 package com.example.dicoding_submisi2.ui.main;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,6 +16,7 @@ import android.widget.ProgressBar;
 
 import com.example.dicoding_submisi2.Adapter;
 import com.example.dicoding_submisi2.ApiInterface;
+import com.example.dicoding_submisi2.MainActivity;
 import com.example.dicoding_submisi2.Movie;
 import com.example.dicoding_submisi2.MovieResults;
 import com.example.dicoding_submisi2.R;
@@ -52,6 +54,7 @@ public class MovieFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.i("wolo", "mv");
         super.onCreate(savedInstanceState);
 
 
@@ -73,6 +76,7 @@ public class MovieFragment extends Fragment {
 //        rvMovie.setHasFixedSize(true);
 //        rvMovie.setLayoutManager(new LinearLayoutManager(getActivity()));
 //        rvMovie.setAdapter(movieAdapter);
+
         movieRecyclerView  = getView().findViewById(R.id.rv_movie);
         movieRecyclerView.setHasFixedSize(true);
         movieRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -105,7 +109,7 @@ public class MovieFragment extends Fragment {
 
                 }
 
-                movieAdapter = new Adapter(movieList, getActivity());
+                movieAdapter = new Adapter("movie",movieList, getActivity());
                 movieRecyclerView.setAdapter(movieAdapter);
 
                 progressBar.setVisibility(View.GONE);
@@ -135,12 +139,27 @@ public class MovieFragment extends Fragment {
         if (savedInstanceState != null) {
             movieList = savedInstanceState.getParcelableArrayList("movieList");
 
-            movieAdapter = new Adapter(movieList, getActivity());
+            movieAdapter = new Adapter("movie",movieList, getActivity());
             movieRecyclerView.setAdapter(movieAdapter);
 
             progressBar.setVisibility(View.GONE);
         }
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        Log.i("onAttach", "mv");
+        super.onAttach(context);
+    }
+    @Override
+    public void setMenuVisibility(final boolean visible) {
+        if (visible) {
+            MainActivity.FRAGMENT_APA = "mv";
+            Log.i("visibility", "mv");
+        }
+
+        super.setMenuVisibility(visible);
     }
 
 

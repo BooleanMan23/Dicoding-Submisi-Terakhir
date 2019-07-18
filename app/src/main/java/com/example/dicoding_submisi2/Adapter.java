@@ -18,13 +18,17 @@ import com.bumptech.glide.request.RequestOptions;
 import com.squareup.picasso.Picasso;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
-
+    String fragmentApa;
     ArrayList<Movie> movies;
     private Context context;
+    ArrayList<Movie> searchResult = new ArrayList<Movie>();
 
-    public Adapter(ArrayList<Movie> movies, Context context) {
+    public Adapter(String fragmentApa, ArrayList<Movie> movies, Context context) {
+        this.fragmentApa = fragmentApa;
+        Log.i("adapterFragmentApa", fragmentApa);
         this.movies = movies;
         this.context = context;
+
     }
 
     public ArrayList<Movie> getListItem(){
@@ -55,6 +59,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             @Override
             public void onClick(View view) {
                 Intent i = new Intent(context, DetailItemActivity.class);
+                i.putExtra("movie", movie);
                 i.putExtra("isMovie", movie.getIsMovie());
                 Log.i("intent isMovie", String.valueOf(movie.getIsMovie()));
                 i.putExtra("id", movie.getId() );

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dicoding_Submisi4</string>
+    <string name="app_name">Dicoding Submisi Terakhir</string>
     <string name="tab_text_1">FILM</string>
     <string name="tab_text_2">ACARA TV</string>
     <string name="tab_text_3">FILM FAVORIT</string>
@@ -211,6 +211,9 @@
     <string name="change_language_settings">Ubah Pengaturan Bahasa</string>
     <string name="masukan_favorit">Masukan Favorit</string>
     <string name="hapus_favorit">hapus favorit</string>
-
+    <string name="turnoffonnalarm">Matikan atau menyalakan alarm</string>
+    <string name="appwidget_text">movie/serial tv faforit</string>
+    <string name="add_widget">Tambah Widget</string>
+    <string name="empty_text">empty_text</string>
 
 </resources>

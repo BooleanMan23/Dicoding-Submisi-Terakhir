@@ -1,5 +1,6 @@
 package com.example.dicoding_submisi2.ui.main;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.example.dicoding_submisi2.Adapter;
+import com.example.dicoding_submisi2.MainActivity;
 import com.example.dicoding_submisi2.Movie;
 import com.example.dicoding_submisi2.SerialTvInterface;
 import com.example.dicoding_submisi2.SerialTvResults;
@@ -48,6 +50,7 @@ public class SerialTvFragment extends Fragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.i("wolo", "st");
         super.onCreate(savedInstanceState);
 
 
@@ -65,6 +68,7 @@ public class SerialTvFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         movieRecyclerView  = getView().findViewById(R.id.rv_movie);
         movieRecyclerView.setHasFixedSize(true);
         movieRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -76,6 +80,7 @@ public class SerialTvFragment extends Fragment {
                 .build();
         SerialTvInterface apiInterface = retrofit.create(SerialTvInterface.class);
         Call<SerialTvResults> call = apiInterface.listOfSerialTv(CATEGORY, API_KEY, LANGUAGE, PAGE);
+//        https://api.themoviedb.org/3/tv/popular?api_key=b9239506432ea4c54f8b16f4a3679008&language=en-US&page=1
         call.enqueue(new Callback<SerialTvResults>() {
             @Override
             public void onResponse(Call<SerialTvResults> call, Response<SerialTvResults> response) {
@@ -98,7 +103,7 @@ public class SerialTvFragment extends Fragment {
 
                 }
 
-                movieAdapter = new Adapter(movieList, getActivity());
+                movieAdapter = new Adapter("serialtv",movieList, getActivity());
                 movieRecyclerView.setAdapter(movieAdapter);
 
                 progressBar.setVisibility(View.GONE);
@@ -129,7 +134,7 @@ public class SerialTvFragment extends Fragment {
         if (savedInstanceState != null) {
             movieList = savedInstanceState.getParcelableArrayList("movieList");
 
-            movieAdapter = new Adapter(movieList, getActivity());
+            movieAdapter = new Adapter("serialtv",movieList, getActivity());
             movieRecyclerView.setAdapter(movieAdapter);
 
             progressBar.setVisibility(View.GONE);
@@ -137,8 +142,20 @@ public class SerialTvFragment extends Fragment {
 
     }
 
+    @Override
+    public void onAttach(Context context) {
+        Log.i("onAttach", "st");
+        super.onAttach(context);
+    }
 
+    @Override
+    public void setMenuVisibility(final boolean visible) {
+        if (visible) {
+            MainActivity.FRAGMENT_APA = "st";
+            Log.i("visibility", "st");
+        }
 
-
+        super.setMenuVisibility(visible);
+    }
 }
 

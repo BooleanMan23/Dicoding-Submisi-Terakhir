@@ -1,6 +1,7 @@
 package com.example.dicoding_submisi2.ui.main;
 
 
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -34,16 +35,23 @@ public class FavoritSerialTvFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        Log.i("wolo", "st");
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_favorit_serial_tv, container, false);
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         movieRecyclerView  = getView().findViewById(R.id.rv_movie);
         movieRecyclerView.setHasFixedSize(true);
         movieRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -51,7 +59,7 @@ public class FavoritSerialTvFragment extends Fragment {
         movieList = new ArrayList<>();
         movieList.clear();
         prepare();
-        movieAdapter = new Adapter(movieList, getActivity());
+        movieAdapter = new Adapter("serialtvfavorite",movieList, getActivity());
         movieRecyclerView.setAdapter(movieAdapter);
         progressBar.setVisibility(View.GONE);
 
@@ -125,12 +133,28 @@ public class FavoritSerialTvFragment extends Fragment {
         if (savedInstanceState != null) {
             movieList = savedInstanceState.getParcelableArrayList("movieList");
 
-            movieAdapter = new Adapter(movieList, getActivity());
+            movieAdapter = new Adapter("serialtvfavorit",movieList, getActivity());
             movieRecyclerView.setAdapter(movieAdapter);
 
             progressBar.setVisibility(View.GONE);
         }
 
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        Log.i("onAttach", "stf");
+        super.onAttach(context);
+    }
+
+    @Override
+    public void setMenuVisibility(final boolean visible) {
+        if (visible) {
+            MainActivity.FRAGMENT_APA = "st";
+            Log.i("visibility", "stf");
+        }
+
+        super.setMenuVisibility(visible);
     }
 
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Dicoding_Submisi4</string>
+    <string name="app_name">Dicoding Submisi Final</string>
     <string name="Tanggal_Rilis">Release Date</string>
     <string name="aditya_negara">Aditya Negara</string>
     <string name="change_language_settings">Change Language Setting</string>
@@ -20,4 +20,14 @@
 
     <string name="tab_text_3">FAVORITE MOVIE</string>
     <string name="tab_text_4">FAVORITE SERIAL TV</string>
+
+    <string name="masukan_favorit">FAVORITE</string>
+    <string name="hapus_favorit">REMOVE FAVORITE</string>
+    <string name="turnoffonnalarm">Turn Off/On Alarm</string>
+
+
+    <string name="appwidget_text">favorite movie/serial tv</string>
+    <string name="add_widget">Add Widget</string>
+    <string name="empty_text">empty_text</string>
+
 </resources>

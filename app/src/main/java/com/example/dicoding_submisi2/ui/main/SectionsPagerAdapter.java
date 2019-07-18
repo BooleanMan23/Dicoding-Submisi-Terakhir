@@ -6,7 +6,10 @@ import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
+import android.widget.Toast;
 
+import com.example.dicoding_submisi2.MainActivity;
 import com.example.dicoding_submisi2.R;
 
 /**
@@ -26,18 +29,31 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
+        Log.i("position", String.valueOf(position));
         Fragment fragment = null;
         if (position == 0){
+
             fragment = new MovieFragment();
+
+
         }
         if (position == 1){
+
             fragment = new SerialTvFragment();
+
+
         }
         else if (position == 2){
+
             fragment = new FavoritMovieFragment();
+
+
         }
         else if (position == 3){
+
             fragment = new FavoritSerialTvFragment();
+
+
         }
         return fragment;
     }
