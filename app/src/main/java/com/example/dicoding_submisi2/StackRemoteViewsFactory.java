@@ -106,7 +106,9 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
     public static void downloadFavorit() {
 
-        Cursor c = MainActivity.myDatabase.rawQuery("SELECT * FROM favorite", null);
+try {
+    Cursor c = MainActivity.myDatabase.rawQuery("SELECT * FROM favorite", null);
+    if (c!= null){
         //mengambil index kolum
         int titleIndex = c.getColumnIndex("title");
         int overviewIndex = c.getColumnIndex("overview");
@@ -129,6 +131,14 @@ class StackRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
             Movie movie = new Movie(id, title, overview, posterLink, releaseDate, isMovie);
             favorit.add(movie);
         } while (c.moveToNext());
+    }
+}
+catch (Exception E){
+
+}
+
+
+
 
     }
 

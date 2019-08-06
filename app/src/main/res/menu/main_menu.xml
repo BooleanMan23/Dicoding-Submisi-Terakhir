@@ -12,6 +12,11 @@
 
     </item>
     <item
+        android:id="@+id/testing"
+        android:title="@string/testing">
+
+    </item>
+    <item
         android:id="@+id/action_search"
         android:icon="@drawable/searchh"
         android:title="Search"

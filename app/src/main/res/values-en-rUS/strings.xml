@@ -30,4 +30,9 @@
     <string name="add_widget">Add Widget</string>
     <string name="empty_text">empty_text</string>
 
+    <string name="notification">Notification</string>
+    <string name="label_daily_reminder_title">Daily Application Reminder</string>
+    <string name="label_daily_reminder_summary">Turn On/Off Daily Notification</string>
+    <string name="label_upcoming_reminder_title">Uplcoming Notification</string>
+    <string name="label_upcoming_reminder_summary">Turn On/Off Release Notification</string>
 </resources>

@@ -11,6 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".testingActivity"></activity>
+        <activity android:name=".alarm.AlarmSettingActivity" />
+
         <receiver android:name=".ImageBannerWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -34,9 +37,19 @@
             </intent-filter>
         </activity>
 
+        <receiver android:name=".alarm.AlertReceiver" />
+
         <service
             android:name=".StackWidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
+        <provider
+            android:authorities="com.example.dicoding_submisi2.contentProvider.ContactProvider"
+            android:name=".contentProvider.ContactProvider"
+            android:exported="true"
+            android:multiprocess="true">
+
+        </provider>
     </application>
 
 </manifest>

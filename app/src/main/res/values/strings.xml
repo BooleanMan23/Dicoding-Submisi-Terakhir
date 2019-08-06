@@ -215,5 +215,11 @@
     <string name="appwidget_text">movie/serial tv faforit</string>
     <string name="add_widget">Tambah Widget</string>
     <string name="empty_text">empty_text</string>
+    <string name="notification">Notifikasi</string>
+    <string name="label_daily_reminder_title">Pengingat Aplikasi Harian</string>
+    <string name="label_daily_reminder_summary">Menyalakan/Mematikan notifikasi</string>
+    <string name="label_upcoming_reminder_title">Notifikasi Film/Movie Yang Akan Datang</string>
+    <string name="label_upcoming_reminder_summary">Matikan/Menyalakan notifikasi yang akan datang</string>
+    <string name="testing">testing</string>
 
 </resources>

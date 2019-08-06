@@ -1,0 +1,91 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Show Contacts"
+        android:id="@+id/btnRetrieve"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="showContacts"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Contacts"
+        android:id="@+id/contactsTextView"
+        android:ems="10"
+        android:layout_centerVertical="true"
+        android:layout_alignRight="@+id/findContactButton"
+        android:layout_alignEnd="@+id/findContactButton" />
+
+    <EditText
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/deleteIDEditText"
+        android:layout_below="@+id/btnRetrieve"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="ID to Delete"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete ID"
+        android:id="@+id/deleteIDButton"
+        android:layout_below="@+id/btnRetrieve"
+        android:layout_toRightOf="@+id/deleteIDEditText"
+        android:layout_toEndOf="@+id/deleteIDEditText"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:onClick="deleteContact"/>
+
+    <EditText
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/idLookupEditText"
+        android:layout_below="@+id/deleteIDEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="ID to Find"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Find Contact"
+        android:id="@+id/findContactButton"
+        android:layout_below="@+id/deleteIDButton"
+        android:layout_toRightOf="@+id/idLookupEditText"
+        android:layout_toEndOf="@+id/idLookupEditText"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp"
+        android:onClick="lookupContact"/>
+
+    <EditText
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/addNameEditText"
+        android:layout_below="@+id/idLookupEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:hint="Name to Add"
+        android:layout_marginTop="10dp"/>
+
+
+</RelativeLayout>

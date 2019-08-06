@@ -1,6 +1,8 @@
 package com.example.dicoding_submisi2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -21,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.dicoding_submisi2.alarm.AlarmSettingActivity;
 import com.example.dicoding_submisi2.ui.main.SectionsPagerAdapter;
 
 import java.util.ArrayList;
@@ -39,11 +42,14 @@ public class MainActivity extends AppCompatActivity {
     public static ArrayList<Double> favoriteId = new ArrayList<Double>();
     ArrayList<Movie> movieList = new ArrayList<>();
     ArrayList<Movie> serialTvList = new ArrayList<>();
+    public static  SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharedPreferences = this.getSharedPreferences("com.example.dicoding_submisi2", Context.MODE_PRIVATE);
 
         try {
             myDatabase = this.openOrCreateDatabase("favorite", MODE_PRIVATE, null);
@@ -101,6 +107,16 @@ public class MainActivity extends AppCompatActivity {
             Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
             startActivity(mIntent);
         }
+
+        if(item.getItemId() == R.id.alarm){
+            Intent intent = new Intent(MainActivity.this, AlarmSettingActivity.class);
+            startActivity(intent);
+        }
+        if (item.getItemId() == R.id.testing){
+            Intent intent = new Intent(MainActivity.this, testingActivity.class);
+            startActivity(intent);
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
