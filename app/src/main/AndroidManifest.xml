@@ -12,7 +12,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".testingActivity"></activity>
-        <activity android:name=".alarm.AlarmSettingActivity" />
 
         <receiver android:name=".ImageBannerWidget">
             <intent-filter>
@@ -24,8 +23,14 @@
                 android:resource="@xml/image_banner_widget_info" />
         </receiver>
 
+        <receiver
+            android:name=".alarm.AlarmReceiver"
+            android:enabled="true"
+            android:exported="true" />
+
         <activity android:name=".SearchResultActivity" />
         <activity android:name=".DetailItemActivity" />
+        <activity android:name=".alarm.AlarmSettingActivity"></activity>
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
@@ -36,8 +41,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <receiver android:name=".alarm.AlertReceiver" />
 
         <service
             android:name=".StackWidgetService"
